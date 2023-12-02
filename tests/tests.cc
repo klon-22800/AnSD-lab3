@@ -64,3 +64,99 @@ TEST(FunctionTest, test_for_bubble_sort_generator) {
 	cout << res.comparison_count<<endl;
 	cout << res.copy_count;
 }
+TEST(FunctionTest, buble_sort_diap_template) {
+	std::vector<float> a{ 100,9,8,7,6,5,4,3,2,100.2 };
+	bubble_sort_diap(a, 4, 5);
+	cout << a;
+}
+TEST(FunctionTest, shell_sort_template) {
+	std::vector<float> a{ 100,9,8,7,6,5,4,3,2,100.2 };
+	shell_sort(a);
+	cout << a;
+}
+TEST(FunctionTest, shell_sort_template_diap) {
+	std::vector<float> a{ 100,9,8,7,6,5,4,3,2,100.2 };
+	shell_sort_diap(a, 4, 6);
+	cout << a;
+}
+
+TEST(FunctionTest, heap_sort_template) {
+	std::vector<float> a{ 100,9,8,7,6,5,4,3,2,100.2 };
+	heap_sort(a);
+	cout << a;
+}
+TEST(FunctionTest, heap_sort_template_diap) {
+	std::vector<double> a{ 100,9,8,7,6,5,4,3,2,100.2 };
+	heap_sort_diap(a, 2, 5);
+	cout << a;
+}
+TEST(FunctionTest, buble_sort_template_string) {
+	std::vector<string> a{ "Hi", "House", "Eternity"};
+	bubble_sort(a);
+	cout << a;
+}
+TEST(FunctionTest, shell_sort_template_string) {
+	std::vector<string> a{ "Hi", "House", "Eternity" };
+	shell_sort(a);
+	cout << a;
+}
+TEST(FunctionTest, heap_sort_template_string) {
+	std::vector<string> a{ "Hi", "House", "Eternity" };
+	heap_sort(a);
+	cout << a;
+}
+TEST(FunctionTest, drink_cout) {
+	Drink jag("Jagermeister", 1500, 0.7, 35);
+	Drink water("Holy spring", 39.99, 0.5, 0);
+	Drink wine("Chateau Latour", 364990, 0.75, 13);
+	Drink champagne("Cristal Louis Roederer Brut", 106000, 0.75, 12);
+	Drink wine2("Sassicaia, Tenuta San Guido", 1999990, 6, 13.5);
+	cout << wine2;
+}
+TEST(FunctionTest, alc_per_price) {
+	Drink jag("Jagermeister", 1500, 0.7, 35);
+	cout << jag.alc_per_price();
+}
+TEST(FunctionTest, drink_comp) {
+	Drink jag("Jagermeister", 1500, 0.7, 35);
+	Drink water("Holy spring", 39.99, 0.5, 0);
+	cout << (jag>water);
+}
+TEST(FunctionTest, drink_bubble_sort) {
+	Drink jag("Jagermeister", 1500, 0.7, 35);
+	Drink water("Holy spring", 39.99, 0.5, 0);
+	Drink wine("Chateau Latour", 364990, 0.75, 13);
+	Drink champagne("Cristal Louis Roederer Brut", 106000, 0.75, 12);
+	Drink wine2("Sassicaia, Tenuta San Guido", 1999990, 6, 13.5);
+	std::vector <Drink> drinks{ jag, water, wine, champagne, wine2 };
+	bubble_sort(drinks);
+	cout << drinks;
+}
+TEST(FunctionTest, drink_shell_sort) {
+	Drink jag("Jagermeister", 1500, 0.7, 35);
+	Drink water("Holy spring", 39.99, 0.5, 0);
+	Drink wine("Chateau Latour", 364990, 0.75, 13);
+	Drink champagne("Cristal Louis Roederer Brut", 106000, 0.75, 12);
+	Drink wine2("Sassicaia, Tenuta San Guido", 1999990, 6, 13.5);
+	std::vector <Drink> drinks{ jag, water, wine, champagne, wine2 };
+	shell_sort(drinks);
+	cout << drinks;
+}
+TEST(FunctionTest, drink_heap_sort) {
+	Drink jag("Jagermeister", 1500, 0.7, 35);
+	Drink water("Holy spring", 39.99, 0.5, 0);
+	Drink wine("Chateau Latour", 364990, 0.75, 13);
+	Drink champagne("Cristal Louis Roederer Brut", 106000, 0.75, 12);
+	Drink wine2("Sassicaia, Tenuta San Guido", 1999990, 6, 13.5);
+	std::vector <Drink> drinks{ jag, water, wine, champagne, wine2 };
+	heap_sort(drinks);
+	cout << drinks;
+}
+//TEST(FunctionTest, get_full_stat_heap) {
+//	std::vector<stats> heap = get_full_stat(3);
+//	cout << heap;
+//}
+TEST(FunctionTest, write_to_file) {
+	std::vector<stats> heap = get_full_stat(1);
+	write_stat_file(heap);
+}

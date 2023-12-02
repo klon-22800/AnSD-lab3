@@ -6,5 +6,4 @@ using namespace alg;
 
 int main(){
 	return 0;
-	
 }

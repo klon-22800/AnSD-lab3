@@ -1,9 +1,48 @@
 #pragma once
 #include<iostream>
 #include <random>
+#include <string>
+#include <fstream>
 
 using namespace std; 
 namespace alg {
+	class Drink {
+	private:
+		string _name;
+		double _price;
+		double _volume;
+		double _abv;
+	public:
+		Drink() {
+			_name = "";
+			_price = 0;
+			_volume = 0;
+			_abv = 0;
+		}
+		Drink(string name, double price, double volume, double abv) {
+			_name = name;
+			_price = price;
+			_volume = volume;
+			_abv = abv;
+		}
+		string get_name() const {
+			return _name;
+		}
+		double get_price() const {
+			return _price;
+		}
+		double get_volume() const {
+			return _volume;
+		}
+		double get_abv() const {
+			return _abv;
+		}
+		double alc_per_price() const {
+			double alc = _abv * _volume;
+			return alc / _price;
+		}
+
+	};
 	struct stats {
 		double comparison_count = 0;
 		double copy_count = 0;
@@ -18,11 +57,12 @@ namespace alg {
 			return *this;
 		}
 	};
+
 	std::vector<int> random(int a, int b, int n) {
 		std::vector<int> res;
 		std::random_device random_device;
-		std::mt19937 generator(random_device()); 
-		std::uniform_int_distribution<> distribution(a, b); 
+		std::mt19937 generator(random_device());
+		std::uniform_int_distribution<> distribution(a, b);
 		for (int i = 0; i < n; i++) {
 			int x = distribution(generator);
 			res.push_back(x);
@@ -43,7 +83,8 @@ namespace alg {
 		}
 		return res;
 	}
-	stats bubble_sort(std::vector<int> &data) {
+	template<typename T>
+	stats bubble_sort(std::vector<T>& data) {
 		stats stat;
 		int n = data.size();
 		for (int i = 0; i < n - 1; i++) {
@@ -57,7 +98,8 @@ namespace alg {
 		}
 		return stat;
 	}
-	stats bubble_sort_diap(std::vector<int> &data, size_t min, size_t max) {
+	template<typename T>
+	stats bubble_sort_diap(std::vector<T>& data, size_t min, size_t max) {
 		stats stat;
 		for (int i = min; i < max; i++) {
 			for (int j = min; j < max; j++) {
@@ -70,7 +112,9 @@ namespace alg {
 		}
 		return stat;
 	}
-	stats shell_sort(std::vector<int> &data) {
+
+	template<typename T>
+	stats shell_sort(std::vector<T>& data) {
 		stats stat;
 		int n = data.size();
 		for (int s = n / 2; s > 0; s /= 2) {
@@ -85,13 +129,14 @@ namespace alg {
 		}
 		return stat;
 	}
-	stats shell_sort_diap(std::vector<int>& data, size_t min, size_t max) {
+	template<typename T>
+	stats shell_sort_diap(std::vector<T>& data, size_t min, size_t max) {
 		stats stat;
 		int n = max - min;
 		for (int s = n / 2; s > 0; s /= 2) {
 			for (int i = s; i < max; ++i) {
 				stat.comparison_count += 1;
-				for (int j = i - s+min; (j >= min) && (j<=max) && (data[j] > data[j + s]); j -= s) {
+				for (int j = i - s + min; (j >= min) && (j <= max) && (data[j] > data[j + s]); j -= s) {
 					stat.copy_count += 1;
 					std::swap(data[j], data[j + s]);
 				}
@@ -99,11 +144,12 @@ namespace alg {
 		}
 		return stat;
 	}
-	
-	void heapify(std::vector<int>& arr, int n, int i, stats& stat) {
-		int largest = i; 
-		int left = 2 * i + 1; 
-		int right = 2 * i + 2; 
+
+	template<typename T>
+	void heapify(std::vector<T>& arr, int n, int i, stats& stat) {
+		int largest = i;
+		int left = 2 * i + 1;
+		int right = 2 * i + 2;
 
 		stat.comparison_count += 1;
 		if (left < n && arr[left] > arr[largest]) {
@@ -119,12 +165,13 @@ namespace alg {
 		if (largest != i) {
 			swap(arr[i], arr[largest]);
 			stat.copy_count += 1;
-			
+
 			heapify(arr, n, largest, stat);
 		}
 	}
 
-	stats heap_sort(std::vector<int>& arr) {
+	template<typename T>
+	stats heap_sort(std::vector<T>& arr) {
 		int n = arr.size();
 		stats stat;
 		for (int i = n / 2 - 1; i >= 0; i--)
@@ -138,7 +185,8 @@ namespace alg {
 		return stat;
 	}
 
-	void heapify_diap(vector<int>& arr, int n, int i, int min) {
+	template<typename T>
+	void heapify_diap(vector<T>& arr, int n, int i, size_t min) {
 		int largest = i;
 		int l = 2 * i + 1;
 		int r = 2 * i + 2;
@@ -154,8 +202,9 @@ namespace alg {
 			heapify_diap(arr, n, largest, min);
 		}
 	}
-		
-	void heap_sort_diap(vector<int>& arr, int min, int max) {
+
+	template<typename T>
+	void heap_sort_diap(vector<T>& arr, size_t min, size_t max) {
 		int n = max - min + 1;
 
 		for (int i = n / 2 - 1; i >= 0; i--) {
@@ -186,18 +235,61 @@ namespace alg {
 		stat = stat / trial_count;
 		return stat;
 	}
-}
 
-template<typename T>
-std::ostream& operator << (std::ostream& os, const std::vector<T> a)
-{
-	cout << "{ ";
-	for (int i = 0; i < a.size(); i++) {
-		if (i < a.size()-1)
-			cout << a[i] << ", ";
-		else {
-			cout << a[i] << " }";
+	vector<stats> get_full_stat(int sort_choice) {
+		vector<stats> stat;
+		for (int i = 1; i < 11; i++) {
+			stat.push_back(get_stat(i * 1000, 1, sort_choice));
 		}
+		stat.push_back(get_stat(25000, 1, sort_choice));
+		stat.push_back(get_stat(50000, 1, sort_choice));
+		stat.push_back(get_stat(100000, 1, sort_choice));
+		return stat;
 	}
-	return os;
+	void write_stat_file(vector<stats> stat) {
+		ofstream fout;
+		fout.open("C:\\Users\\Andrew Saydashev\\Desktop\\AnSD-lab3\\stat.txt");
+		for (int i = 0; i < stat.size(); i++) {
+			fout << stat[i].comparison_count << " " << stat[i].copy_count << endl;
+		}
+		fout.close();
+		return;
+	}
+
+	template<typename T>
+	std::ostream& operator << (std::ostream& os, const std::vector<T> a)
+	{
+		cout << "{ ";
+		for (int i = 0; i < a.size(); i++) {
+			if (i < a.size() - 1)
+				cout << a[i] << ", ";
+			else {
+				cout << a[i] << " }";
+			}
+		}
+		return os;
+	}
+
+	bool operator<(const std::string& lhs, const std::string& rhs) {
+		return lhs.compare(rhs) < 0;
+	}
+	bool operator>(const std::string& lhs, const std::string& rhs) {
+		return lhs.compare(rhs) > 0;
+	}
+
+	bool operator<(const Drink& lhs, const Drink& rhs) {
+		return lhs.alc_per_price() < rhs.alc_per_price();
+	}
+	bool operator>(const Drink& lhs, const Drink& rhs) {
+		return lhs.alc_per_price() > rhs.alc_per_price();
+	}
+
+	std::ostream& operator <<(std::ostream& os, const Drink a) {
+		os << a.get_name() << " " << a.get_volume() << "l " << a.get_abv() << "% " << a.get_price() << "r ";
+		return os;
+	}
+	std::ostream& operator <<(std::ostream& os, const stats a) {
+		os << "compasion count: " << a.comparison_count<<" " << "copy count: " << a.copy_count;
+		return os;
+	}
 }
