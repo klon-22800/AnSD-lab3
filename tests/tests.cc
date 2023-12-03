@@ -152,11 +152,36 @@ TEST(FunctionTest, drink_heap_sort) {
 	heap_sort(drinks);
 	cout << drinks;
 }
-//TEST(FunctionTest, get_full_stat_heap) {
+//TEST(FunctionTest, write_to_file) {
 //	std::vector<stats> heap = get_full_stat(3);
-//	cout << heap;
+//	write_stat_file(heap);
+//	
 //}
-TEST(FunctionTest, write_to_file) {
-	std::vector<stats> heap = get_full_stat(1);
-	write_stat_file(heap);
+//TEST(FunctionTest, ord_stat) {
+//	std::vector<stats> stat;
+//	for (int i = 1; i < 11; i++) {
+//		std::vector<int> test = ordered_vector(i * 1000);
+//		stat.push_back(shell_sort(test));
+//	}
+//	std::vector<int> test = ordered_vector(25000);
+//	stat.push_back(shell_sort(test));
+//	std::vector<int> test1 = ordered_vector(50000);
+//	stat.push_back(shell_sort(test1));
+//	std::vector<int> test2 = ordered_vector(100000);
+//	stat.push_back(shell_sort(test2));
+//	write_stat_file(stat);
+//}
+TEST(FunctionTest, inv_stat) {
+	std::vector<stats> stat;
+	for (int i = 1; i < 11; i++) {
+		std::vector<int> test = reversed_ordered_vector(i * 1000);
+		stat.push_back(heap_sort(test));
+	}
+	std::vector<int> test = reversed_ordered_vector(25000);
+	stat.push_back(heap_sort(test));
+	std::vector<int> test1 = reversed_ordered_vector(50000);
+	stat.push_back(heap_sort(test1));
+	std::vector<int> test2 = reversed_ordered_vector(100000);
+	stat.push_back(heap_sort(test2));
+	write_stat_file(stat);
 }

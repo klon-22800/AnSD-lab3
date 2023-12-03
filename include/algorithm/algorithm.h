@@ -220,6 +220,7 @@ namespace alg {
 		stats stat;
 		for (int i = 0; i < trial_count; i++) {
 			std::vector<int> test = random(-1000, 1000, vect_len);
+			cout << "iteration: " << i << endl;
 			switch (sort_choice) {
 			case 1:
 				stat += bubble_sort(test);
@@ -239,16 +240,20 @@ namespace alg {
 	vector<stats> get_full_stat(int sort_choice) {
 		vector<stats> stat;
 		for (int i = 1; i < 11; i++) {
-			stat.push_back(get_stat(i * 1000, 1, sort_choice));
+			stat.push_back(get_stat(i * 1000, 100, sort_choice));
+			cout << "len: " << i*1000 << endl;
 		}
-		stat.push_back(get_stat(25000, 1, sort_choice));
-		stat.push_back(get_stat(50000, 1, sort_choice));
-		stat.push_back(get_stat(100000, 1, sort_choice));
+		cout << "len: " << 25000 << endl;
+		stat.push_back(get_stat(25000, 100, sort_choice));
+		cout << "len: " << 50000 << endl;
+		stat.push_back(get_stat(50000, 100, sort_choice));
+		cout << "len: " << 100000 << endl;
+		stat.push_back(get_stat(100000, 100, sort_choice));
 		return stat;
 	}
 	void write_stat_file(vector<stats> stat) {
 		ofstream fout;
-		fout.open("C:\\Users\\Andrew Saydashev\\Desktop\\AnSD-lab3\\stat.txt");
+		fout.open("C:\\Users\\Andrew Saydashev\\Desktop\\AnSD-lab3\\stat_inv_heap.txt");
 		for (int i = 0; i < stat.size(); i++) {
 			fout << stat[i].comparison_count << " " << stat[i].copy_count << endl;
 		}
