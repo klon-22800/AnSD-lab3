@@ -69,6 +69,17 @@ namespace alg {
 		}
 		return res;
 	}
+	std::vector<int> random_seed(int a, int b, int n, int seed) {
+		std::vector<int> res;
+		/*std::random_device random_device;*/
+		std::mt19937 generator(seed);
+		std::uniform_int_distribution<> distribution(a, b);
+		for (int i = 0; i < n; i++) {
+			int x = distribution(generator);
+			res.push_back(x);
+		}
+		return res;
+	}
 	std::vector<int> ordered_vector(int n) {
 		std::vector<int> res;
 		for (int i = 0; i < n; i++) {
@@ -121,7 +132,6 @@ namespace alg {
 			for (int i = s; i < n; ++i) {
 				stat.comparison_count += 1;
 				for (int j = i - s; j >= 0 && data[j] > data[j + s]; j -= s) {
-					stat.comparison_count += 1;
 					stat.copy_count += 1;
 					std::swap(data[j], data[j + s]);
 				}
@@ -132,11 +142,11 @@ namespace alg {
 	template<typename T>
 	stats shell_sort_diap(std::vector<T>& data, size_t min, size_t max) {
 		stats stat;
-		int n = max - min;
+		int n = max-min;
 		for (int s = n / 2; s > 0; s /= 2) {
-			for (int i = s; i < max; ++i) {
+			for (int i = s; i <	 max; ++i) {
 				stat.comparison_count += 1;
-				for (int j = i - s + min; (j >= min) && (j <= max) && (data[j] > data[j + s]); j -= s) {
+				for (int j = i - s + min-1; (j >= min) && (j <= max) && (data[j] > data[j + s]); j -= s) {
 					stat.copy_count += 1;
 					std::swap(data[j], data[j + s]);
 				}
@@ -253,7 +263,7 @@ namespace alg {
 	}
 	void write_stat_file(vector<stats> stat) {
 		ofstream fout;
-		fout.open("C:\\Users\\Andrew Saydashev\\Desktop\\AnSD-lab3\\stat_inv_heap.txt");
+		fout.open("C:\\Users\\Andrew Saydashev\\Desktop\\AnSD-lab3\\stat_inv_shell.txt");
 		for (int i = 0; i < stat.size(); i++) {
 			fout << stat[i].comparison_count << " " << stat[i].copy_count << endl;
 		}
@@ -264,12 +274,12 @@ namespace alg {
 	template<typename T>
 	std::ostream& operator << (std::ostream& os, const std::vector<T> a)
 	{
-		cout << "{ ";
+		os << "{ ";
 		for (int i = 0; i < a.size(); i++) {
 			if (i < a.size() - 1)
-				cout << a[i] << ", ";
+				os << a[i] << ", ";
 			else {
-				cout << a[i] << " }";
+				os << a[i] << " }";
 			}
 		}
 		return os;

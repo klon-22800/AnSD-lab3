@@ -171,17 +171,17 @@ TEST(FunctionTest, drink_heap_sort) {
 //	stat.push_back(shell_sort(test2));
 //	write_stat_file(stat);
 //}
-TEST(FunctionTest, inv_stat) {
-	std::vector<stats> stat;
-	for (int i = 1; i < 11; i++) {
-		std::vector<int> test = reversed_ordered_vector(i * 1000);
-		stat.push_back(heap_sort(test));
-	}
-	std::vector<int> test = reversed_ordered_vector(25000);
-	stat.push_back(heap_sort(test));
-	std::vector<int> test1 = reversed_ordered_vector(50000);
-	stat.push_back(heap_sort(test1));
-	std::vector<int> test2 = reversed_ordered_vector(100000);
-	stat.push_back(heap_sort(test2));
-	write_stat_file(stat);
-}
+//TEST(FunctionTest, inv_stat) {
+//	std::vector<stats> stat;
+//	for (int i = 1; i < 11; i++) {
+//		std::vector<int> test = reversed_ordered_vector(i * 1000);
+//		stat.push_back(shell_sort(test));
+//	}
+//	std::vector<int> test = reversed_ordered_vector(25000);
+//	stat.push_back(shell_sort(test));
+//	std::vector<int> test1 = reversed_ordered_vector(50000);
+//	stat.push_back(shell_sort(test1));
+//	std::vector<int> test2 = reversed_ordered_vector(100000);
+//	stat.push_back(shell_sort(test2));
+//	write_stat_file(stat);
+//}
